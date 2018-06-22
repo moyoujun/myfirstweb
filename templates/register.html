@@ -1,0 +1,16 @@
+<html>
+<head>
+  <title>注册一个新的账号</title>
+</head>
+<body>
+  {% if message %}
+    <p style="color:red">{{ message }}</p>
+  {% endif %}
+  <form action="/register" method="post">
+    <legend>注册属于你的新账号:</legend>
+    <p><input name="username" placeholder="Username" value="{{ username }}"></p>
+    <p><input name="password" placeholder="Password"></p>
+    <p><button type="submit">Register</button></p>
+  </form>
+</body>
+</html>

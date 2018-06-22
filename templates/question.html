@@ -1,0 +1,45 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href1="../static/images/favicon.ico"/>
+    <link rel="icon" href="../static/images/favicon.ico"/>
+    <title>我的第一份问卷表</title>
+    <script>
+    function addchoice(){
+        var p = document.getElementById('add');    
+        var arr = ['D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];  
+        var i = (p.innerHTML).length/74
+        if (i>=9){
+        choice_content = document.createElement('p');
+        choice_content.innerHTML="Can not add more choice"
+        p.append(choice_content);
+        }else if (i>=1){
+        choice_content = document.createElement('p');
+        choice_content.innerHTML="选项"+arr[i]+": <input type=\'text\' name=\"choice "+arr[i]+"\" placeholder=\"选项"+arr[i]+"\" value=\"\">"
+        p.append(choice_content);
+        }else{
+        p.innerHTML = "<p>选项D: <input type='text' name='choice D' placeholder='选项D' value=''></p>";
+        }
+        }
+    </script>
+</head>
+<body>
+    <div style="margin-left:100px">
+    <p>请开始设计你的问卷调查表！</p>
+    <form method='post' action='/myquestion'>
+        问题描述:
+        <p><textarea rows="5" cols='60' name="question" placeholder="my questionnaire description" value=""></textarea></p>
+        <p>选项A:    <input type='text' name="choice A" placeholder="选项A" value=""></p>
+        <p>选项B:    <input type='text' name="choice B" placeholder="选项B" value=""></p>
+        <p>选项C:    <input type='text' name="choice C" placeholder="选项C" value=""></p>
+        <div id='add'>......</div>
+        <p>增加选项  <input type='Button' value='Add choice' onclick='addchoice()'></p>
+        <p><input type='checkbox' name='multi' value='Yes'>多选</p>
+        <p>生成我的问卷：<input type='Submit' name='submit' value='提交'/></p>
+    </form>
+    </div>
+</body>
+</html>

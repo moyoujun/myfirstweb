@@ -1,0 +1,47 @@
+<html>
+<head>
+  <title>我们的留言板</title>
+  <style>
+    .myform{
+        background-color:rgb(238,238,238);
+        color:black;
+        margin:10px;}
+    </style>
+</head>
+<body>
+  <p>{{ username }},这里是你发布过的留言！
+      <a style="text-align:right" href='/log_out'>退出</a>
+      <a style="text-align:right" href='/admin'>管理</a>
+      <hr></hr>
+  </p>
+  {% for result in results %}
+      <p class='myform'><table border='0'><tr>
+      <td>{{ result.name}}</td>
+      <td>{{ result.time }}</td>
+      <td>{{ result.ip  }}</td>
+      {% if username==result.name %}
+          <td> <a href="/">删除留言</a></td>
+      {% endif %}
+      </tr></table>
+      <table border='0' width='800'><tr><div style='margin-left:20px'>
+      {{ result.content }}
+      </div></tr></table></p>
+  {% endfor %} 
+  <table>
+      <tr>
+          <td>
+          <h5>请提交你的留言</h5>
+          <br />
+          <form method='post' action='/message'>
+          <label>留言内容:<br/>
+          <textarea name='content' cols='100' rows='10'></textarea>
+          </label>
+          <br>
+          <input type='Submit' name='submit' value='提交'/>
+          <input name='Cancel' type='reset' value='重置'/>
+          </form>
+          </td>
+      </tr>
+  </table>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../static/images/favicon.ico"/>
+    <link rel="icon" href="../static/images/favicon.ico"/>
+    <link href="../static/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="../static/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="../static/css/custom.css" rel="stylesheet">
+    <title>我们的留言板</title>
+</head>
+<body>
+  <p>欢迎, {{ username }},请开始讨论吧！
+      <a  href='/log_out'>退出</a>
+      <a  href='/myquestion'>我要发布问卷</a>
+  </p>
+  <p><a  href='/myquestion/post'>看看有哪些问卷</a></p>
+  <hr></hr>
+  <div class='container'>
+  {% for result in results %}
+      <p class='custom-panel'>
+      <table border='0'><tr>
+        <td width=120px>{{ result.name }}</td>
+        <td width=200px>{{ result.time }}</td>
+        <td width=200px>{{ result.ip  }}</td>
+      {% if username==result.name %}
+          <td><a href="/delete/{{ result.ID }}">删除留言</a></td>
+      {% endif %}
+      </tr>
+      <tr>
+      <td colspan=4>
+      <div style="margin:10px 20px">
+          {{ result.content | safe}}
+      </div>
+      </td></tr></table></p>
+  {% endfor %}
+  <p>
+    {% for message in get_flashed_messages(with_categories=True) %}
+    <div class='alert alert-{{ message[0] }}'>
+    <button type='button' class='close' data-dismiss='alert'>
+        &times;
+    </button>
+    {{ message[1] }}
+    </div>
+    {% endfor %}
+  </p>
+  <p>
+      {% for page in pageno %}
+      <a href='page={{ page }}' style='font-size:15pt;'>{{ page }}</a>
+      {% endfor %}
+  </p>
+  
+  <p>
+   <h5>请提交你的留言</h5><br/>
+   <form method='post' action='/upload/file' enctype="multipart/form-data">
+    <input id='lefile' type='file' style='display:none;' name='file'>
+    <div class='input-append'>
+        <input id='photoCover' class='input-large' type='text' style='height:30px;'>
+        <a class='btn' onclick="$('input[id=lefile]').click();">浏览</a>
+    </div>
+    <script type='text/javascript'>$('input[id=lefile]').change(function(){
+        $('#photoCover'.val($(this).val());
+    });
+    </script>
+    <input type='Submit' value='上传' class='btn btn-default' style='width:200px'/>
+  </form>
+    <form method='post' action='/message'>
+          <label>留言内容:<br/>
+          <div class="tinymce-group">
+          <textarea id='tinymce-content' name='content'></textarea>
+          </label>
+          <br/>
+          <input type='Submit' name='submit' value='提交'/>
+          <input name='Cancel' type='reset' value='重置'/>
+          </form>
+    </p>
+
+</div>
+    <script src="../static/bootstrap/assets/js/jquery.js"></script>
+    <script src="../static/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../static/bootstrap/assets/js/holder.js"></script>
+    <script src="../static/tinymce/js/tinymce/tinymce.js"></script>
+    <script src="../static/javascript/tinymce_setup.js"></script>
+</body>
+</html>
